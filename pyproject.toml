@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "cc-connector-cli"
 version = "0.1"
-authors = ["Christoph Jansen <Christoph.Jansen@htw-berlin.de>", "Bruno Schilling <s0555131@htw-berlin.de"]
+authors = ["Bruno Schilling <s0555131@htw-berlin.de", "Christoph Jansen <Christoph.Jansen@htw-berlin.de>"]
 license = "AGPL-3.0"
 readme = "README.md"
 repository = "https://github.com/curious-containers/cc-connector-cli"
