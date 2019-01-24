@@ -206,10 +206,10 @@ def run_connector_with_args(connector_class, args):
         try:
             connector_method(*file_contents)
         except Exception as e:
-            print('The "{}" function of the "{}" connector failed.\n{}:\n{}'.format(connector_function.name,
-                                                                                    connector_class.__name__,
-                                                                                    e.__class__.__name__,
-                                                                                    str(e)),
+            print('The "{}" function of the "{}" connector failed.\n[{}]\n{}'.format(connector_function.name,
+                                                                                     connector_class.__name__,
+                                                                                     e.__class__.__name__,
+                                                                                     str(e)),
                   file=sys.stderr)
             return 1
 
