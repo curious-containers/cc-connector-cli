@@ -209,7 +209,8 @@ def run_connector_with_args(connector_class, args):
             print('The "{}" function of the "{}" connector failed.\n{}:\n{}'.format(connector_function.name,
                                                                                     connector_class.__name__,
                                                                                     e.__class__.__name__,
-                                                                                    str(e)))
+                                                                                    str(e)),
+                  file=sys.stderr)
             return 1
 
     return 0
