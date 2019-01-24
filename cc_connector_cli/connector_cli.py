@@ -17,11 +17,6 @@ import inspect
 import json
 
 CAPABILITIES = 'capabilities'
-PARAMETER_TO_ARGUMENT = {
-    'access': 'access-file',
-    'internal': 'internal-file',
-    'listing': 'listing'
-}
 
 
 class ConnectorFunction:
@@ -104,13 +99,13 @@ def add_parser_argument(parser, func_param):
     :param func_param: A parameter of a connector function
     """
     if func_param == 'access':
-        parser.add_argument('access-file', action='store', type=str,
+        parser.add_argument('access', action='store', type=str,
                             help='A json file with access information.')
     elif func_param == 'internal':
-        parser.add_argument('internal-file', action='store', type=str,
+        parser.add_argument('internal', action='store', type=str,
                             help='A json file with internal information.')
     elif func_param == 'listing':
-        parser.add_argument('listing-file', action='store', type=str,
+        parser.add_argument('listing', action='store', type=str,
                             help='A json file with listing information.')
     else:
         raise ValueError('Unknown function argument "{}" for connector function'.format(func_param))
@@ -195,8 +190,7 @@ def run_connector_with_args(connector_class, args):
         # load needed files
         file_contents = []
         for p in connector_function.params:
-            argument = PARAMETER_TO_ARGUMENT[p]
-            file_path = args.__dict__[argument]
+            file_path = args.__dict__[p]
             file_content = _load_json_file(file_path)
             file_contents.append(file_content)
 
