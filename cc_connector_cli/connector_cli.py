@@ -122,7 +122,7 @@ def add_parser_arguments(parser, func_params):
         add_parser_argument(parser, func_param)
 
 
-def create_parser(connector_class):
+def create_parser(connector_class, version=None):
     """
     Creates an ArgumentParser for the given connector class.
 
@@ -130,6 +130,11 @@ def create_parser(connector_class):
     :return: An ArgumentParser
     """
     parser = argparse.ArgumentParser()
+
+    if version is not None:
+        parser.add_argument(
+            '-v', '--version', action='version', version=version
+        )
 
     subparsers = parser.add_subparsers(dest='command')
     subparsers.required = True
@@ -216,12 +221,12 @@ def run_connector_with_args(connector_class, args):
     return 0
 
 
-def run_connector(connector_class):
+def run_connector(connector_class, version=None):
     """
     Creates a cli wrapper around the given connector_class.
 
     :param connector_class: The connector class to wrap.
     """
-    parser = create_parser(connector_class)
+    parser = create_parser(connector_class, version=version)
     args = parser.parse_args()
     sys.exit(run_connector_with_args(connector_class, args))
