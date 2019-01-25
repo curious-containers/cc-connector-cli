@@ -203,19 +203,27 @@ def run_connector_with_args(connector_class, args):
         try:
             connector_method = getattr(connector_class, connector_function.name)
         except AttributeError:
-            print('The given connector class "{}" does not implement the function "{}"'.format(connector_class.__name__,
-                                                                                               connector_function.name),
-                  file=sys.stderr)
+            print(
+                'The given connector class "{}" does not implement the function "{}"'.format(
+                    connector_class.__name__,
+                    connector_function.name
+                ),
+                file=sys.stderr
+            )
             return 2
 
         try:
             connector_method(*file_contents)
         except Exception as e:
-            print('The "{}" function of the "{}" connector failed.\n[{}]\n{}'.format(connector_function.name,
-                                                                                     connector_class.__name__,
-                                                                                     e.__class__.__name__,
-                                                                                     str(e)),
-                  file=sys.stderr)
+            print(
+                'The "{}" function of the "{}" connector failed.\n[{}]\n{}'.format(
+                    connector_function.name,
+                    connector_class.__name__,
+                    e.__class__.__name__,
+                    str(e)
+                ),
+                file=sys.stderr
+            )
             return 1
 
     return 0
@@ -229,4 +237,4 @@ def run_connector(connector_class, version=None):
     """
     parser = create_parser(connector_class, version=version)
     args = parser.parse_args()
-    sys.exit(run_connector_with_args(connector_class, args))
+    exit(run_connector_with_args(connector_class, args))
