@@ -10,7 +10,6 @@ For additional functionality the given class can implement the following functio
  - send_validate(access)
  - receive_directory_validate(access)
 """
-import copy
 import sys
 
 import argparse
