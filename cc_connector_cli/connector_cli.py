@@ -10,6 +10,7 @@ For additional functionality the given class can implement the following functio
  - send_validate(access)
  - receive_directory_validate(access)
 """
+import copy
 import sys
 
 import argparse
@@ -66,12 +67,12 @@ def create_connector_description(connector_class):
     connector_description = {}
     for f in CONNECTOR_FUNCTIONS:
         key_name = f.name.replace('_', '-')
-        connector_description[key_name] = has_function(connector_class, f)
+        connector_description[key_name] = _has_function(connector_class, f)
 
     return connector_description
 
 
-def has_function(connector_class, func):
+def _has_function(connector_class, func):
     """
     Returns True, if connector_class implements a function like func
 
@@ -105,7 +106,7 @@ def add_parser_argument(parser, func_param):
         parser.add_argument('internal', action='store', type=str,
                             help='A json file with internal information.')
     elif func_param == 'listing':
-        parser.add_argument('listing', action='store', type=str,
+        parser.add_argument('--listing', action='store', type=str,
                             help='A json file with listing information.')
     else:
         raise ValueError('Unknown function argument "{}" for connector function'.format(func_param))
@@ -127,6 +128,7 @@ def create_parser(connector_class, version=None):
     Creates an ArgumentParser for the given connector class.
 
     :param connector_class: The connector class
+    :param version: The version string of the connector_class
     :return: An ArgumentParser
     """
     parser = argparse.ArgumentParser()
@@ -140,7 +142,7 @@ def create_parser(connector_class, version=None):
     subparsers.required = True
 
     for func in CONNECTOR_FUNCTIONS:
-        if has_function(connector_class, func):
+        if _has_function(connector_class, func):
             sub_parser = subparsers.add_parser(_function_to_argument_name(func.name))
             add_parser_arguments(sub_parser, func.params)
 
@@ -196,7 +198,10 @@ def run_connector_with_args(connector_class, args):
         file_contents = []
         for p in connector_function.params:
             file_path = args.__dict__[p]
-            file_content = _load_json_file(file_path)
+            if file_path:
+                file_content = _load_json_file(file_path)
+            else:
+                file_content = None
             file_contents.append(file_content)
 
         # execute connector
@@ -234,6 +239,7 @@ def run_connector(connector_class, version=None):
     Creates a cli wrapper around the given connector_class.
 
     :param connector_class: The connector class to wrap.
+    :param version: The version string of the given connector.
     """
     parser = create_parser(connector_class, version=version)
     args = parser.parse_args()
