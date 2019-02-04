@@ -10,7 +10,6 @@ For additional functionality the given class can implement the following functio
  - send_validate(access)
  - receive_directory_validate(access)
 """
-import copy
 import sys
 
 import argparse
@@ -40,9 +39,13 @@ CONNECTOR_FUNCTIONS = [
     ConnectorFunction(name='receive', params=['access', 'internal']),
     ConnectorFunction(name='send', params=['access', 'internal']),
     ConnectorFunction(name='receive_directory', params=['access', 'internal', 'listing']),
+
     ConnectorFunction(name='receive_validate', params=['access']),
     ConnectorFunction(name='send_validate', params=['access']),
     ConnectorFunction(name='receive_directory_validate', params=['access']),
+
+    ConnectorFunction(name='receive_cleanup', params=['internal']),
+    ConnectorFunction(name='receive_directory_cleanup', params=['internal']),
 ]
 
 
