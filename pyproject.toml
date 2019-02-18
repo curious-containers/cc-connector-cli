@@ -1,11 +1,11 @@
 [tool.poetry]
 name = "cc-connector-cli"
 version = "0.3"
-authors = ["Bruno Schilling <s0555131@htw-berlin.de>", "Christoph Jansen <Christoph.Jansen@htw-berlin.de>"]
+authors = ["Bruno Schilling <Bruno.Schilling@student.htw-berlin.de>", "Christoph Jansen <Christoph.Jansen@htw-berlin.de>"]
 license = "AGPL-3.0"
 readme = "README.md"
 repository = "https://github.com/curious-containers/cc-connector-cli"
-homepage = "https://curious-containers.github.io/"
+homepage = "https://www.curious-containers.cc/"
 description = "CC Connector CLI is part of the Curious Containers project."
 
 [tool.poetry.dependencies]
